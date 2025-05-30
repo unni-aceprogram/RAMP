@@ -17,13 +17,16 @@
     <button class="logout-btn" onclick="logout()">Log Out</button>
   </div>
 
-  <!-- Login Page -->
+  <!-- Login/Sign-Up Page -->
   <div id="login-page" class="container">
     <div class="login-container">
-      <h2>Login</h2>
+      <h2 id="form-title">Login</h2>
       <input type="email" id="email" placeholder="Email" />
       <input type="password" id="password" placeholder="Password" />
-      <button onclick="login()">Log In</button>
+      <button id="auth-button" onclick="handleAuth()">Log In</button>
+      <p id="toggle-text">
+        Don't have an account? <a href="#" onclick="toggleMode()">Sign Up</a>
+      </p>
     </div>
   </div>
 
@@ -59,28 +62,38 @@
     import {
       getAuth,
       signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
       onAuthStateChanged,
       signOut
     } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
-    // Replace these values with your Firebase project config
+    // Your Firebase config
     const firebaseConfig = {
-       apiKey: "AIzaSyCyKASAjZkRf040E55RWwiHcrprvMyxbW8",
       authDomain: "ramp-mam.firebaseapp.com",
-      projectId: "ramp-mam",
-      storageBucket: "ramp-mam.appspot.com",
-      messagingSenderId: "746196273797",
-       appId: "1:746196273797:web:bf79928b875d90ffebb7ec"
+  projectId: "ramp-mam",
+  storageBucket: "ramp-mam.firebasestorage.app",
+  messagingSenderId: "746196273797",
+  appId: "1:746196273797:web:bf79928b875d90ffebb7ec"
     };
 
-    // Initialize Firebase app & auth
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
     let theme = "Elegant";
+    let isSignUp = false;
 
-    // Login function
-    window.login = function () {
+    // Toggle between login and sign up
+    window.toggleMode = function () {
+      isSignUp = !isSignUp;
+      document.getElementById("form-title").textContent = isSignUp ? "Sign Up" : "Login";
+      document.getElementById("auth-button").textContent = isSignUp ? "Sign Up" : "Log In";
+      document.getElementById("toggle-text").innerHTML = isSignUp
+        ? 'Already have an account? <a href="#" onclick="toggleMode()">Login</a>'
+        : 'Don\'t have an account? <a href="#" onclick="toggleMode()">Sign Up</a>';
+    };
+
+    // Handle login or sign up based on mode
+    window.handleAuth = function () {
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
@@ -89,21 +102,32 @@
         return;
       }
 
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          console.log("Logged in:", userCredential.user.email);
-          showUser(userCredential.user.email);
-        })
-        .catch((error) => {
-          alert("Login failed: " + error.message);
-          console.error("Login error:", error);
-        });
+      if (isSignUp) {
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            console.log("Signed up:", userCredential.user.email);
+            showUser(userCredential.user.email);
+          })
+          .catch((error) => {
+            alert("Sign-up failed: " + error.message);
+            console.error("Sign-up error:", error);
+          });
+      } else {
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            console.log("Logged in:", userCredential.user.email);
+            showUser(userCredential.user.email);
+          })
+          .catch((error) => {
+            alert("Login failed: " + error.message);
+            console.error("Login error:", error);
+          });
+      }
     };
 
-    // Logout function: signs out and reloads page to reset all state
     window.logout = function () {
       signOut(auth).then(() => {
-        location.reload(); // full reload to clear UI and JS state
+        location.reload(); // full reload to reset everything
       }).catch((error) => {
         console.error("Logout error:", error);
       });
@@ -129,7 +153,6 @@
       buttons.forEach((button, index) => {
         const day = button.getAttribute("data-day");
         if (index === 0) {
-          // Day 1 always unlocked
           button.classList.remove("locked");
           button.disabled = false;
           return;
@@ -160,13 +183,12 @@
       document.getElementById("theme-toggle").textContent = theme;
     });
 
-    // Check auth state on load
+    // Firebase auth state observer
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log("User is logged in:", user.email);
         showUser(user.email);
 
-        // Mark passed buttons visually
         document.querySelectorAll(".day-button").forEach((button) => {
           const day = button.getAttribute("data-day");
           if (isDayPassed(day)) {
