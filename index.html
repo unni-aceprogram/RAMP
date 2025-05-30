@@ -91,22 +91,21 @@
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+          console.log("Logged in:", userCredential.user.email);
           showUser(userCredential.user.email);
         })
         .catch((error) => {
           alert("Login failed: " + error.message);
+          console.error("Login error:", error);
         });
     };
 
-    // Logout function
+    // Logout function: signs out and reloads page to reset all state
     window.logout = function () {
       signOut(auth).then(() => {
-        document.getElementById("login-page").style.display = "block";
-        document.getElementById("main-content").style.display = "none";
-        document.getElementById("user-info").style.display = "none";
-        document.getElementById("email").value = "";
-        document.getElementById("password").value = "";
-        document.title = "Flight Manager";
+        location.reload(); // full reload to clear UI and JS state
+      }).catch((error) => {
+        console.error("Logout error:", error);
       });
     };
 
@@ -118,6 +117,7 @@
       document.getElementById("login-page").style.display = "none";
       document.getElementById("main-content").style.display = "block";
       document.getElementById("user-info").style.display = "flex";
+      updateButtonStates();
     }
 
     function isDayPassed(day) {
@@ -128,7 +128,12 @@
       const buttons = document.querySelectorAll(".day-button");
       buttons.forEach((button, index) => {
         const day = button.getAttribute("data-day");
-        if (index === 0) return; // Day 1 always unlocked
+        if (index === 0) {
+          // Day 1 always unlocked
+          button.classList.remove("locked");
+          button.disabled = false;
+          return;
+        }
         const prevDay = buttons[index - 1].getAttribute("data-day");
         if (!isDayPassed(prevDay)) {
           button.classList.add("locked");
@@ -158,15 +163,18 @@
     // Check auth state on load
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log("User is logged in:", user.email);
         showUser(user.email);
+
+        // Mark passed buttons visually
         document.querySelectorAll(".day-button").forEach((button) => {
           const day = button.getAttribute("data-day");
           if (isDayPassed(day)) {
             button.classList.add("passed");
           }
         });
-        updateButtonStates();
       } else {
+        console.log("No user logged in");
         document.getElementById("login-page").style.display = "block";
         document.getElementById("main-content").style.display = "none";
         document.getElementById("user-info").style.display = "none";
