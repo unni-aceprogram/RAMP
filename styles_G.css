@@ -117,6 +117,21 @@
     }
 }
 
+.accordion-content {
+    padding: 20px;
+}
+
+.image-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Optional, adjusts the space between images */
+}
+
+.image-container img {
+    width: 48%; /* Makes the images take up almost half the width of the container */
+    height: auto;
+    border-radius: 8px; /* Optional, for rounded corners */
+}
 
 
 
