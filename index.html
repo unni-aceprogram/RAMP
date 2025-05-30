@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Flight Manager</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="styles_L.css">
-  </head>
+  <link rel="stylesheet" href="styles_L.css">
+</head>
 <body>
 
   <!-- ✅ User Info -->
@@ -22,7 +22,7 @@
   <div id="login-page" class="container">
     <div class="login-container">
       <h2>Login</h2>
-      <input type="text" id="username" placeholder="Username" />
+      <input type="email" id="email" placeholder="Email" />
       <input type="password" id="password" placeholder="Password" />
       <button onclick="login()">Log In</button>
     </div>
@@ -55,35 +55,67 @@
     </section>
   </div>
 
+  <!-- ✅ Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js"></script>
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
   <script>
+    // ✅ REPLACE with your Firebase config
+ const firebaseConfig = {
+  apiKey: "AIzaSyCyKASAjZkRf040E55RWwiHcrprvMyxbW8",
+  authDomain: "ramp-mam.firebaseapp.com",
+  projectId: "ramp-mam",
+  storageBucket: "ramp-mam.firebasestorage.app",
+  messagingSenderId: "746196273797",
+  appId: "1:746196273797:web:bf79928b875d90ffebb7ec"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
     let theme = 'Elegant';
 
     function login() {
-      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
-      if (username && password) {
-        localStorage.setItem('user', username);
-        showUser(username);
+
+      if (email && password) {
+        auth.signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            showUser(user.email);
+          })
+          .catch((error) => {
+            alert("Login failed: " + error.message);
+          });
       } else {
-        alert('Please enter a valid username and password.');
+        alert('Please enter valid email and password.');
       }
     }
 
     function logout() {
-      localStorage.removeItem('user');
-      document.getElementById('login-page').style.display = 'block';
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('user-info').style.display = 'none';
-      document.getElementById('username').value = '';
-      document.getElementById('password').value = '';
-      document.title = 'Flight Manager';
+      auth.signOut().then(() => {
+        document.getElementById('login-page').style.display = 'block';
+        document.getElementById('main-content').style.display = 'none';
+        document.getElementById('user-info').style.display = 'none';
+        document.getElementById('email').value = '';
+        document.getElementById('password').value = '';
+        document.title = 'Flight Manager';
+      });
     }
 
-    function showUser(username) {
-      const initials = username.charAt(0).toUpperCase();
+    function showUser(email) {
+      const initials = email.charAt(0).toUpperCase();
       document.getElementById('user-initials').textContent = initials;
-      document.getElementById('username-display').textContent = `👋 Welcome, ${username}`;
-      document.title = `Welcome, ${username} - Flight Manager`;
+      document.getElementById('username-display').textContent = `👋 Welcome, ${email}`;
+      document.title = `Welcome, ${email} - Flight Manager`;
       document.getElementById('login-page').style.display = 'none';
       document.getElementById('main-content').style.display = 'block';
       document.getElementById('user-info').style.display = 'flex';
@@ -111,7 +143,6 @@
         if (!button.classList.contains('locked')) {
           localStorage.setItem(`${page}_passed`, 'true');
           const suffix = theme === 'Elegant' ? '_E' : '_G';
-          console.log("Redirecting to:", `${page}${suffix}.html`);
           window.location.href = `${page}${suffix}.html`;
         }
       });
@@ -122,20 +153,20 @@
       document.getElementById('theme-toggle').textContent = theme;
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const loggedInUser = localStorage.getItem('user');
-      if (loggedInUser) {
-        showUser(loggedInUser);
+    // ✅ Check auth state on load
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        showUser(user.email);
+        document.querySelectorAll('.day-button').forEach(button => {
+          const day = button.getAttribute('data-day');
+          if (isDayPassed(day)) {
+            button.classList.add('passed');
+          }
+        });
+        updateButtonStates();
+      } else {
+        document.getElementById('login-page').style.display = 'block';
       }
-
-      document.querySelectorAll('.day-button').forEach(button => {
-        const day = button.getAttribute('data-day');
-        if (isDayPassed(day)) {
-          button.classList.add('passed');
-        }
-      });
-
-      updateButtonStates();
     });
   </script>
 </body>
