@@ -22,7 +22,7 @@
   <div id="login-page" class="container">
     <div class="login-container">
       <h2>Login</h2>
-      <input type="text" id="username" placeholder="Username (e.g. someone@goindigo.com)" />
+      <input type="text" id="username" placeholder="Username (e.g. someone@goindigo.in)" />
       <input type="password" id="password" placeholder="Password" />
       <button onclick="login()">Log In</button>
     </div>
@@ -62,11 +62,10 @@
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
 
-      // Validate email format
-      const emailPattern = /^[a-zA-Z0-9._%+-]+@goindigo\.com$/;
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@goindigo\.in$/;
 
       if (!emailPattern.test(username)) {
-        alert("Please use a valid goindigo.com email address.");
+        alert("Please use a valid goindigo.in email address.");
         return;
       }
 
@@ -90,37 +89,47 @@
     }
 
     function showUser(email) {
-      const name = email.split('@')[0];
-      const initials = name.charAt(0).toUpperCase();
+      let namePart = email.split('@')[0];
+      if (namePart.includes('.')) {
+        namePart = namePart.split('.')[0];
+      }
+      namePart = namePart.replace(/\d+$/g, '');
+      const displayName = namePart.charAt(0).toUpperCase() + namePart.slice(1).toLowerCase();
+
+      const initials = displayName.charAt(0).toUpperCase();
       document.getElementById('user-initials').textContent = initials;
-      document.getElementById('username-display').textContent = `👋 Welcome, ${name}`;
-      document.title = `Welcome, ${name} - Flight Manager`;
+      document.getElementById('username-display').textContent = `👋 Welcome, ${displayName}`;
+      document.title = `Welcome, ${displayName} - Flight Manager`;
       document.getElementById('login-page').style.display = 'none';
       document.getElementById('main-content').style.display = 'block';
       document.getElementById('user-info').style.display = 'flex';
     }
 
-    function isDayPassed(day) {
-      return localStorage.getItem(`${day}_passed`) === 'true';
+    // Updated to use username prefix for isolation
+    function isDayPassed(user, day) {
+      return localStorage.getItem(`${user}_${day}_passed`) === 'true';
     }
 
-    function updateButtonStates() {
+    function updateButtonStates(user) {
       const buttons = document.querySelectorAll('.day-button');
       buttons.forEach((button, index) => {
         const day = button.getAttribute('data-day');
-        if (index === 0) return;
+        if (index === 0) return; // Day 1 never locked
         const prevDay = buttons[index - 1].getAttribute('data-day');
-        if (!isDayPassed(prevDay)) {
+        if (!isDayPassed(user, prevDay)) {
           button.classList.add('locked');
+        } else {
+          button.classList.remove('locked');
         }
       });
     }
 
     document.querySelectorAll('.day-button').forEach(button => {
       button.addEventListener('click', () => {
+        const loggedInUser = localStorage.getItem('user');
         const page = button.getAttribute('data-day');
         if (!button.classList.contains('locked')) {
-          localStorage.setItem(`${page}_passed`, 'true');
+          localStorage.setItem(`${loggedInUser}_${page}_passed`, 'true');
           const suffix = theme === 'Elegant' ? '_E' : '_G';
           window.location.href = `${page}${suffix}.html`;
         }
@@ -136,16 +145,18 @@
       const loggedInUser = localStorage.getItem('user');
       if (loggedInUser) {
         showUser(loggedInUser);
+
+        document.querySelectorAll('.day-button').forEach(button => {
+          const day = button.getAttribute('data-day');
+          if (isDayPassed(loggedInUser, day)) {
+            button.classList.add('passed');
+          } else {
+            button.classList.remove('passed');
+          }
+        });
+
+        updateButtonStates(loggedInUser);
       }
-
-      document.querySelectorAll('.day-button').forEach(button => {
-        const day = button.getAttribute('data-day');
-        if (isDayPassed(day)) {
-          button.classList.add('passed');
-        }
-      });
-
-      updateButtonStates();
     });
   </script>
 </body>
