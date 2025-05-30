@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Flight Manager</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles_L.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles_L.css">
 </head>
 <body>
-  <!-- User Info -->
+
+  <!-- ✅ User Info -->
   <div id="user-info" class="user-info" style="display: none;">
     <div class="user-initials" id="user-initials">U</div>
     <div>
@@ -17,25 +18,23 @@
     <button class="logout-btn" onclick="logout()">Log Out</button>
   </div>
 
-  <!-- Login/Sign-Up Page -->
+  <!-- ✅ Login Page -->
   <div id="login-page" class="container">
     <div class="login-container">
-      <h2 id="form-title">Login</h2>
-      <input type="email" id="email" placeholder="Email" />
+      <h2>Login</h2>
+      <input type="text" id="username" placeholder="Username (e.g. someone@goindigo.com)" />
       <input type="password" id="password" placeholder="Password" />
-      <button id="auth-button" onclick="handleAuth()">Log In</button>
-      <p id="toggle-text">
-        Don't have an account? <a href="#" onclick="toggleMode()">Sign Up</a>
-      </p>
+      <button onclick="login()">Log In</button>
     </div>
   </div>
 
-  <!-- Main App -->
+  <!-- ✅ Main App -->
   <div id="main-content" class="container" style="display: none;">
     <header>
       <h1><span class="title-part1">Flight Manager</span> <span class="title-part2">Program</span></h1>
     </header>
 
+    <!-- Toggle Container -->
     <div id="toggle-container" class="toggle-container">
       <span>Select Theme:</span>
       <button id="theme-toggle" class="toggle-button">Elegant</button>
@@ -56,154 +55,97 @@
     </section>
   </div>
 
-  <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      createUserWithEmailAndPassword,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+  <script>
+    let theme = 'Elegant';
 
-    // Your Firebase config
-    const firebaseConfig = {
-  apiKey: "AIzaSyCyKASAjZkRf040E55RWwiHcrprvMyxbW8",
-  authDomain: "ramp-mam.firebaseapp.com",
-  projectId: "ramp-mam",
-  storageBucket: "ramp-mam.firebasestorage.app",
-  messagingSenderId: "746196273797",
-  appId: "1:746196273797:web:bf79928b875d90ffebb7ec"
-};
+    function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
 
-    };
+      // Validate email format
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@goindigo\.com$/;
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    let theme = "Elegant";
-    let isSignUp = false;
-
-    // Toggle between login and sign up
-    window.toggleMode = function () {
-      isSignUp = !isSignUp;
-      document.getElementById("form-title").textContent = isSignUp ? "Sign Up" : "Login";
-      document.getElementById("auth-button").textContent = isSignUp ? "Sign Up" : "Log In";
-      document.getElementById("toggle-text").innerHTML = isSignUp
-        ? 'Already have an account? <a href="#" onclick="toggleMode()">Login</a>'
-        : 'Don\'t have an account? <a href="#" onclick="toggleMode()">Sign Up</a>';
-    };
-
-    // Handle login or sign up based on mode
-    window.handleAuth = function () {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-
-      if (!email || !password) {
-        alert("Please enter valid email and password.");
+      if (!emailPattern.test(username)) {
+        alert("Please use a valid goindigo.com email address.");
         return;
       }
 
-      if (isSignUp) {
-        createUserWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            console.log("Signed up:", userCredential.user.email);
-            showUser(userCredential.user.email);
-          })
-          .catch((error) => {
-            alert("Sign-up failed: " + error.message);
-            console.error("Sign-up error:", error);
-          });
-      } else {
-        signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            console.log("Logged in:", userCredential.user.email);
-            showUser(userCredential.user.email);
-          })
-          .catch((error) => {
-            alert("Login failed: " + error.message);
-            console.error("Login error:", error);
-          });
+      if (password !== 'admin') {
+        alert("Incorrect password. Hint: it's 'admin'");
+        return;
       }
-    };
 
-    window.logout = function () {
-      signOut(auth).then(() => {
-        location.reload(); // full reload to reset everything
-      }).catch((error) => {
-        console.error("Logout error:", error);
-      });
-    };
+      localStorage.setItem('user', username);
+      showUser(username);
+    }
+
+    function logout() {
+      localStorage.removeItem('user');
+      document.getElementById('login-page').style.display = 'block';
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('user-info').style.display = 'none';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      document.title = 'Flight Manager';
+    }
 
     function showUser(email) {
-      const initials = email.charAt(0).toUpperCase();
-      document.getElementById("user-initials").textContent = initials;
-      document.getElementById("username-display").textContent = `👋 Welcome, ${email}`;
-      document.title = `Welcome, ${email} - Flight Manager`;
-      document.getElementById("login-page").style.display = "none";
-      document.getElementById("main-content").style.display = "block";
-      document.getElementById("user-info").style.display = "flex";
-      updateButtonStates();
+      const name = email.split('@')[0];
+      const initials = name.charAt(0).toUpperCase();
+      document.getElementById('user-initials').textContent = initials;
+      document.getElementById('username-display').textContent = `👋 Welcome, ${name}`;
+      document.title = `Welcome, ${name} - Flight Manager`;
+      document.getElementById('login-page').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+      document.getElementById('user-info').style.display = 'flex';
     }
 
     function isDayPassed(day) {
-      return localStorage.getItem(`${day}_passed`) === "true";
+      return localStorage.getItem(`${day}_passed`) === 'true';
     }
 
     function updateButtonStates() {
-      const buttons = document.querySelectorAll(".day-button");
+      const buttons = document.querySelectorAll('.day-button');
       buttons.forEach((button, index) => {
-        const day = button.getAttribute("data-day");
-        if (index === 0) {
-          button.classList.remove("locked");
-          button.disabled = false;
-          return;
-        }
-        const prevDay = buttons[index - 1].getAttribute("data-day");
+        const day = button.getAttribute('data-day');
+        if (index === 0) return;
+        const prevDay = buttons[index - 1].getAttribute('data-day');
         if (!isDayPassed(prevDay)) {
-          button.classList.add("locked");
-          button.disabled = true;
-        } else {
-          button.classList.remove("locked");
-          button.disabled = false;
+          button.classList.add('locked');
         }
       });
     }
 
-    document.querySelectorAll(".day-button").forEach((button) => {
-      button.addEventListener("click", () => {
-        if (button.classList.contains("locked")) return;
-        const page = button.getAttribute("data-day");
-        localStorage.setItem(`${page}_passed`, "true");
-        const suffix = theme === "Elegant" ? "_E" : "_G";
-        window.location.href = `${page}${suffix}.html`;
+    document.querySelectorAll('.day-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const page = button.getAttribute('data-day');
+        if (!button.classList.contains('locked')) {
+          localStorage.setItem(`${page}_passed`, 'true');
+          const suffix = theme === 'Elegant' ? '_E' : '_G';
+          window.location.href = `${page}${suffix}.html`;
+        }
       });
     });
 
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-      theme = theme === "Elegant" ? "GenZ" : "Elegant";
-      document.getElementById("theme-toggle").textContent = theme;
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      theme = theme === 'Elegant' ? 'GenZ' : 'Elegant';
+      document.getElementById('theme-toggle').textContent = theme;
     });
 
-    // Firebase auth state observer
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("User is logged in:", user.email);
-        showUser(user.email);
-
-        document.querySelectorAll(".day-button").forEach((button) => {
-          const day = button.getAttribute("data-day");
-          if (isDayPassed(day)) {
-            button.classList.add("passed");
-          }
-        });
-      } else {
-        console.log("No user logged in");
-        document.getElementById("login-page").style.display = "block";
-        document.getElementById("main-content").style.display = "none";
-        document.getElementById("user-info").style.display = "none";
+    document.addEventListener('DOMContentLoaded', () => {
+      const loggedInUser = localStorage.getItem('user');
+      if (loggedInUser) {
+        showUser(loggedInUser);
       }
+
+      document.querySelectorAll('.day-button').forEach(button => {
+        const day = button.getAttribute('data-day');
+        if (isDayPassed(day)) {
+          button.classList.add('passed');
+        }
+      });
+
+      updateButtonStates();
     });
   </script>
 </body>
