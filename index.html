@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Flight Manager</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles_L.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles_L.css" />
 </head>
 <body>
-
-  <!-- ✅ User Info -->
+  <!-- User Info -->
   <div id="user-info" class="user-info" style="display: none;">
     <div class="user-initials" id="user-initials">U</div>
     <div>
@@ -18,7 +17,7 @@
     <button class="logout-btn" onclick="logout()">Log Out</button>
   </div>
 
-  <!-- ✅ Login Page -->
+  <!-- Login Page -->
   <div id="login-page" class="container">
     <div class="login-container">
       <h2>Login</h2>
@@ -28,13 +27,12 @@
     </div>
   </div>
 
-  <!-- ✅ Main App -->
+  <!-- Main App -->
   <div id="main-content" class="container" style="display: none;">
     <header>
       <h1><span class="title-part1">Flight Manager</span> <span class="title-part2">Program</span></h1>
     </header>
 
-    <!-- Toggle Container -->
     <div id="toggle-container" class="toggle-container">
       <span>Select Theme:</span>
       <button id="theme-toggle" class="toggle-button">Elegant</button>
@@ -55,113 +53,123 @@
     </section>
   </div>
 
-  <!-- ✅ Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js"></script>
-  <script>
-    // ✅ REPLACE with your Firebase config
- const firebaseConfig = {
-  apiKey: "AIzaSyCyKASAjZkRf040E55RWwiHcrprvMyxbW8",
-  authDomain: "ramp-mam.firebaseapp.com",
-  projectId: "ramp-mam",
-  storageBucket: "ramp-mam.firebasestorage.app",
-  messagingSenderId: "746196273797",
-  appId: "1:746196273797:web:bf79928b875d90ffebb7ec"
-};
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+    // Replace these values with your Firebase project config
+    const firebaseConfig = {
+       apiKey: "AIzaSyCyKASAjZkRf040E55RWwiHcrprvMyxbW8",
+      authDomain: "ramp-mam.firebaseapp.com",
+      projectId: "ramp-mam",
+      storageBucket: "ramp-mam.appspot.com",
+      messagingSenderId: "746196273797",
+       appId: "1:746196273797:web:bf79928b875d90ffebb7ec"
+    };
 
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    // Initialize Firebase app & auth
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-    let theme = 'Elegant';
+    let theme = "Elegant";
 
-    function login() {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
+    // Login function
+    window.login = function () {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
 
-      if (email && password) {
-        auth.signInWithEmailAndPassword(email, password)
-          .then((userCredential) => {
-            const user = userCredential.user;
-            showUser(user.email);
-          })
-          .catch((error) => {
-            alert("Login failed: " + error.message);
-          });
-      } else {
-        alert('Please enter valid email and password.');
+      if (!email || !password) {
+        alert("Please enter valid email and password.");
+        return;
       }
-    }
 
-    function logout() {
-      auth.signOut().then(() => {
-        document.getElementById('login-page').style.display = 'block';
-        document.getElementById('main-content').style.display = 'none';
-        document.getElementById('user-info').style.display = 'none';
-        document.getElementById('email').value = '';
-        document.getElementById('password').value = '';
-        document.title = 'Flight Manager';
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          showUser(userCredential.user.email);
+        })
+        .catch((error) => {
+          alert("Login failed: " + error.message);
+        });
+    };
+
+    // Logout function
+    window.logout = function () {
+      signOut(auth).then(() => {
+        document.getElementById("login-page").style.display = "block";
+        document.getElementById("main-content").style.display = "none";
+        document.getElementById("user-info").style.display = "none";
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
+        document.title = "Flight Manager";
       });
-    }
+    };
 
     function showUser(email) {
       const initials = email.charAt(0).toUpperCase();
-      document.getElementById('user-initials').textContent = initials;
-      document.getElementById('username-display').textContent = `👋 Welcome, ${email}`;
+      document.getElementById("user-initials").textContent = initials;
+      document.getElementById("username-display").textContent = `👋 Welcome, ${email}`;
       document.title = `Welcome, ${email} - Flight Manager`;
-      document.getElementById('login-page').style.display = 'none';
-      document.getElementById('main-content').style.display = 'block';
-      document.getElementById('user-info').style.display = 'flex';
+      document.getElementById("login-page").style.display = "none";
+      document.getElementById("main-content").style.display = "block";
+      document.getElementById("user-info").style.display = "flex";
     }
 
     function isDayPassed(day) {
-      return localStorage.getItem(`${day}_passed`) === 'true';
+      return localStorage.getItem(`${day}_passed`) === "true";
     }
 
     function updateButtonStates() {
-      const buttons = document.querySelectorAll('.day-button');
+      const buttons = document.querySelectorAll(".day-button");
       buttons.forEach((button, index) => {
-        const day = button.getAttribute('data-day');
-        if (index === 0) return;
-        const prevDay = buttons[index - 1].getAttribute('data-day');
+        const day = button.getAttribute("data-day");
+        if (index === 0) return; // Day 1 always unlocked
+        const prevDay = buttons[index - 1].getAttribute("data-day");
         if (!isDayPassed(prevDay)) {
-          button.classList.add('locked');
+          button.classList.add("locked");
+          button.disabled = true;
+        } else {
+          button.classList.remove("locked");
+          button.disabled = false;
         }
       });
     }
 
-    document.querySelectorAll('.day-button').forEach(button => {
-      button.addEventListener('click', () => {
-        const page = button.getAttribute('data-day');
-        if (!button.classList.contains('locked')) {
-          localStorage.setItem(`${page}_passed`, 'true');
-          const suffix = theme === 'Elegant' ? '_E' : '_G';
-          window.location.href = `${page}${suffix}.html`;
-        }
+    document.querySelectorAll(".day-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        if (button.classList.contains("locked")) return;
+        const page = button.getAttribute("data-day");
+        localStorage.setItem(`${page}_passed`, "true");
+        const suffix = theme === "Elegant" ? "_E" : "_G";
+        window.location.href = `${page}${suffix}.html`;
       });
     });
 
-    document.getElementById('theme-toggle').addEventListener('click', () => {
-      theme = theme === 'Elegant' ? 'GenZ' : 'Elegant';
-      document.getElementById('theme-toggle').textContent = theme;
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+      theme = theme === "Elegant" ? "GenZ" : "Elegant";
+      document.getElementById("theme-toggle").textContent = theme;
     });
 
-    // ✅ Check auth state on load
-    auth.onAuthStateChanged((user) => {
+    // Check auth state on load
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         showUser(user.email);
-        document.querySelectorAll('.day-button').forEach(button => {
-          const day = button.getAttribute('data-day');
+        document.querySelectorAll(".day-button").forEach((button) => {
+          const day = button.getAttribute("data-day");
           if (isDayPassed(day)) {
-            button.classList.add('passed');
+            button.classList.add("passed");
           }
         });
         updateButtonStates();
       } else {
-        document.getElementById('login-page').style.display = 'block';
+        document.getElementById("login-page").style.display = "block";
+        document.getElementById("main-content").style.display = "none";
+        document.getElementById("user-info").style.display = "none";
       }
     });
   </script>
