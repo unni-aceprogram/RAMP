@@ -1,0 +1,99 @@
+ body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f6f8;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        h1 {
+            color: #005f99;
+        }
+        section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+
+.completed {
+            color: green;
+            font-weight: bold;
+        }
+        .accordion-header.completed::before {
+            content: "✔️ ";
+            color: green;
+        }
+        .accordion-content {
+            display: none;
+            padding: 10px;
+            margin-top: 5px;
+            background-color: #f4f4f4;
+        }
+        .accordion-header {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+        }
+        .accordion-header:hover {
+            background-color: #ddd;
+        }
+        .accordion-item {
+            margin-bottom: 10px;
+        }
+        .pagination button {
+            padding: 10px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .pagination button:disabled {
+            background-color: #ccc;
+        }
+
+
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        /* Button Styling */
+        .back-button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-top: 20px;
+            background-color: #005f99;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #004577;
+            transform: scale(1.05);
+        }
+
+        .back-button:active {
+            background-color: #003a5c;
+            transform: scale(1);
+        }
+
+

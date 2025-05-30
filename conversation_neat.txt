@@ -1,0 +1,18 @@
+<p><strong>Trainee:</strong> Sir, why is the ramp considered important?</p>
+<p><strong>Instructor:</strong> The ramp is like a busy street—planes, trucks, baggage carts, and people, all moving around. It’s a fast-paced area, so staying aware is key to staying safe.</p>
+
+<p><strong>Trainee:</strong> Got it! How do I make sure I stay safe?</p>
+<p><strong>Instructor:</strong> It’s simple—stay alert, follow the rules, and wear your Personal Protective Equipment (PPE). They are your best friend here—make them your second skin.</p>
+
+<p><strong>Trainee:</strong> PPE!! What's that?</p>
+<p><strong>Instructor:</strong> Before you enter airside, you need to ensure you have the following PPE Kit with you. It contains Ramp Jacket, Safety Shoes and earplugs. Our Agile staff carry Safety gloves too as they are handle baggage loading and offloading from aircarft or trolleys</p>
+
+<p><strong>Trainee:</strong> What’s the biggest mistake people make?</p>
+<p><strong>Instructor:</strong> Not being aware of their surroundings. It’s like walking in a crowded market—if you’re not looking, you might bump into something. Keep your head up.</p>
+
+<p><strong>Trainee:</strong> And if something feels off?</p>
+<p><strong>Instructor:</strong> Don’t hesitate to speak up. A quick check is always better than letting something slide.</p>
+
+<p><strong>Instructor:</strong> By the way, do you know the full form of RAMP?</p> 
+<p><strong>Trainee:</strong> No, I don’t. What is it?</p> 
+<p><strong>Instructor:</strong> It stands for "Region of Aircraft Movement and Parking." It’s the area where aircraft are parked, moved, and serviced. Think of it as the zone where all ground operations take place—fueling, loading, maintenance, and more.</p>

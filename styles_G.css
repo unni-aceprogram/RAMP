@@ -1,0 +1,153 @@
+ body {
+            font-family: 'Patrick Hand', cursive;
+            background: #fff9f1 url('https://www.transparenttextures.com/patterns/white-wall-3.png'); /* Subtle texture */
+            color: #2c2c2c;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #f7d794;
+            text-align: center;
+            padding: 30px 20px;
+            border-bottom: 4px dashed #e58e26;
+        }
+
+        h1 {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #e58e26;
+        }
+
+        p.intro {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .accordion {
+            max-width: 900px;
+            margin: 30px auto;
+        }
+
+        .accordion-item {
+            background-color: #fff;
+            border: 1px solid #333;
+            border-radius: 12px;
+            margin: 10px 0;
+        }
+
+        .accordion-header {
+            background-color: #227093;
+            color: white;
+            padding: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            border: none;
+            text-align: left;
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .accordion-content {
+            padding: 15px;
+            display: none;
+            background-color: #f1f1f1;
+        }
+
+        .pagination {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .pagination button {
+            background-color: #e58e26;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: none;
+            margin: 0 5px;
+            cursor: pointer;
+            font-family: 'Patrick Hand', cursive;
+        }
+
+        .pagination button:hover {
+            background-color: #f7d794;
+            color: #e58e26;
+        }
+
+/* Allow accordion content to scroll when it's too long */
+.accordion-content {
+    padding: 15px;
+    display: none;
+    background-color: #f1f1f1;
+    max-height: 300px; /* Limit height to make it scrollable */
+    overflow-y: auto; /* Scroll when content overflows */
+}
+
+/* Add spacing between accordion sections */
+.accordion-item {
+    background-color: #fff;
+    border: 1px solid #333;
+    border-radius: 12px;
+    margin: 20px 0; /* Increase margin between sections */
+}
+
+/* Ensure images within accordion are responsive */
+.accordion-content img {
+    width: 100%; /* Make images responsive */
+    max-width: 600px; /* Limit max width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+    .accordion-header {
+        font-size: 1.2em; /* Adjust font size for smaller screens */
+        padding: 12px;
+    }
+
+    .accordion-content {
+        padding: 10px; /* Less padding on smaller devices */
+    }
+
+    .pagination button {
+        font-size: 1em;
+    }
+}
+
+
+
+
+        footer {
+            text-align: center;
+            font-size: 1em;
+            color: #555;
+            padding: 20px;
+            background-color: #f3f3f3;
+            border-top: 3px dashed #ccc;
+            margin-top: 50px;
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: #e58e26;
+            color: #fff;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.1em;
+            padding: 15px 30px;
+            margin: 20px auto;
+            text-align: center;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #f7d794;
+            color: #e58e26;
+            transform: scale(1.1);
+        }
+
