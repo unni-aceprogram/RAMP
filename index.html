@@ -6,6 +6,19 @@
   <title>Flight Manager</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles_L.css">
+  <style>
+    /* Added some quick styles for passed and locked states */
+    .passed {
+      background-color: #4caf50 !important; /* green */
+      color: white;
+    }
+    .locked {
+      background-color: #ccc !important;
+      color: #666;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
 
@@ -76,15 +89,24 @@
 
       localStorage.setItem('user', username);
       showUser(username);
+      updateUIForUser(username);
     }
 
     function logout() {
       localStorage.removeItem('user');
+
+      // Clear UI states for buttons (remove green/locked)
+      clearButtonStates();
+
+      // Hide main content, show login
       document.getElementById('login-page').style.display = 'block';
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('user-info').style.display = 'none';
+
+      // Clear input fields
       document.getElementById('username').value = '';
       document.getElementById('password').value = '';
+
       document.title = 'Flight Manager';
     }
 
@@ -105,16 +127,39 @@
       document.getElementById('user-info').style.display = 'flex';
     }
 
-    // Updated to use username prefix for isolation
+    // Check if day passed for specific user
     function isDayPassed(user, day) {
       return localStorage.getItem(`${user}_${day}_passed`) === 'true';
     }
 
-    function updateButtonStates(user) {
+    // Clear all buttons passed and locked states — used on logout
+    function clearButtonStates() {
       const buttons = document.querySelectorAll('.day-button');
-      buttons.forEach((button, index) => {
+      buttons.forEach(button => {
+        button.classList.remove('passed');
+        button.classList.remove('locked');
+      });
+    }
+
+    // Update buttons UI for the logged-in user
+    function updateUIForUser(user) {
+      const buttons = document.querySelectorAll('.day-button');
+
+      buttons.forEach(button => {
         const day = button.getAttribute('data-day');
-        if (index === 0) return; // Day 1 never locked
+        if (isDayPassed(user, day)) {
+          button.classList.add('passed');
+        } else {
+          button.classList.remove('passed');
+        }
+      });
+
+      // Lock buttons except first day if previous day not passed
+      buttons.forEach((button, index) => {
+        if (index === 0) {
+          button.classList.remove('locked'); // Day 1 always unlocked
+          return;
+        }
         const prevDay = buttons[index - 1].getAttribute('data-day');
         if (!isDayPassed(user, prevDay)) {
           button.classList.add('locked');
@@ -124,38 +169,46 @@
       });
     }
 
+    // Add click events to day buttons
     document.querySelectorAll('.day-button').forEach(button => {
       button.addEventListener('click', () => {
         const loggedInUser = localStorage.getItem('user');
-        const page = button.getAttribute('data-day');
-        if (!button.classList.contains('locked')) {
-          localStorage.setItem(`${loggedInUser}_${page}_passed`, 'true');
-          const suffix = theme === 'Elegant' ? '_E' : '_G';
-          window.location.href = `${page}${suffix}.html`;
+        if (!loggedInUser) {
+          alert('Please log in first.');
+          return;
         }
+
+        if (button.classList.contains('locked')) {
+          alert('This day is locked. Please complete previous days first.');
+          return;
+        }
+
+        const page = button.getAttribute('data-day');
+
+        // Mark day as passed for this user
+        localStorage.setItem(`${loggedInUser}_${page}_passed`, 'true');
+
+        // Update button UI immediately
+        updateUIForUser(loggedInUser);
+
+        // Navigate to page with theme suffix
+        const suffix = theme === 'Elegant' ? '_E' : '_G';
+        window.location.href = `${page}${suffix}.html`;
       });
     });
 
+    // Theme toggle button
     document.getElementById('theme-toggle').addEventListener('click', () => {
       theme = theme === 'Elegant' ? 'GenZ' : 'Elegant';
       document.getElementById('theme-toggle').textContent = theme;
     });
 
+    // On page load, check if user logged in, and restore state
     document.addEventListener('DOMContentLoaded', () => {
       const loggedInUser = localStorage.getItem('user');
       if (loggedInUser) {
         showUser(loggedInUser);
-
-        document.querySelectorAll('.day-button').forEach(button => {
-          const day = button.getAttribute('data-day');
-          if (isDayPassed(loggedInUser, day)) {
-            button.classList.add('passed');
-          } else {
-            button.classList.remove('passed');
-          }
-        });
-
-        updateButtonStates(loggedInUser);
+        updateUIForUser(loggedInUser);
       }
     });
   </script>
