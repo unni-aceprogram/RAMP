@@ -224,3 +224,14 @@ header {
       font-size: 1rem;
       cursor: pointer;
     }
+
+   .passed {
+      background-color: #4caf50 !important;
+      color: white;
+    }
+    .locked {
+      background-color: #ccc !important;
+      color: #666;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
