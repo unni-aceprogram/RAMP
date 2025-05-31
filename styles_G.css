@@ -1,107 +1,173 @@
- body {
-            font-family: 'Patrick Hand', cursive;
-            background: #fff9f1 url('https://www.transparenttextures.com/patterns/white-wall-3.png'); /* Subtle texture */
-            color: #2c2c2c;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #f7d794;
-            text-align: center;
-            padding: 30px 20px;
-            border-bottom: 4px dashed #e58e26;
-        }
-
-        h1 {
-            font-family: 'Permanent Marker', cursive;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #e58e26;
-        }
-
-        p.intro {
-            font-size: 1.2em;
-            color: #333;
-        }
-
-        .accordion {
-            max-width: 900px;
-            margin: 30px auto;
-        }
-
-        .accordion-item {
-            background-color: #fff;
-            border: 1px solid #333;
-            border-radius: 12px;
-            margin: 10px 0;
-        }
-
-        .accordion-header {
-            background-color: #227093;
-            color: white;
-            padding: 15px;
-            font-size: 1.5em;
-            cursor: pointer;
-            border: none;
-            text-align: left;
-            width: 100%;
-            border-radius: 12px;
-        }
-
-        .accordion-content {
-            padding: 15px;
-            display: none;
-            background-color: #f1f1f1;
-        }
-
-        .pagination {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .pagination button {
-            background-color: #e58e26;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 12px;
-            border: none;
-            margin: 0 5px;
-            cursor: pointer;
-            font-family: 'Patrick Hand', cursive;
-        }
-
-        .pagination button:hover {
-            background-color: #f7d794;
-            color: #e58e26;
-        }
-
-/* Allow accordion content to scroll when it's too long */
-.accordion-content {
-    padding: 15px;
-    display: none;
-    background-color: #f1f1f1;
-    max-height: 300px; /* Limit height to make it scrollable */
-    overflow-y: auto; /* Scroll when content overflows */
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Add spacing between accordion sections */
+html, body {
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Global body styling for both modules */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f9ff; /* Light background to keep it easy on the eyes */
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background-color: #f7d794;
+    text-align: center;
+    padding: 30px 20px;
+    border-bottom: 4px dashed #e58e26;
+}
+
+h1 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #e58e26;
+}
+
+p.intro {
+    font-size: 1.2em;
+    color: #333;
+}
+
+/* Accordion Module Styling */
+.accordion {
+    max-width: 900px;
+    margin: 30px auto;
+}
+
 .accordion-item {
     background-color: #fff;
     border: 1px solid #333;
     border-radius: 12px;
-    margin: 20px 0; /* Increase margin between sections */
+    margin: 10px 0;
 }
 
-/* Ensure images within accordion are responsive */
-.accordion-content img {
-    width: 100%; /* Make images responsive */
-    max-width: 600px; /* Limit max width */
-    height: auto; /* Maintain aspect ratio */
+.accordion-header {
+    background-color: #227093;
+    color: white;
+    padding: 15px;
+    font-size: 1.5em;
+    cursor: pointer;
+    border: none;
+    text-align: left;
+    width: 100%;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
+.accordion-header:hover {
+    background-color: #45a049; /* Slightly darker green when hovered */
+    transform: scale(1.05); /* Slight zoom on hover for effect */
+}
 
-/* Mobile view adjustments */
+.accordion-header:after {
+    content: "▼"; /* Default icon */
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    font-size: 1.5rem;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.accordion-item.active .accordion-header:after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Accordion Content */
+.accordion-content {
+    padding: 15px;
+    display: none;
+    background-color: #f1f1f1;
+    max-height: 400px; /* Limit height to make it scrollable */
+    overflow-y: auto;
+    border-left: 3px solid #4caf50; /* Green left border for a clean look */
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.accordion-item.active .accordion-content {
+    display: block;
+    opacity: 1;
+}
+
+.accordion-content p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.accordion-content p.strong {
+    display: inline-block;
+    padding-right: 10px;
+}
+
+.accordion-content p .emoji {
+    font-size: 1.3rem; /* Larger emojis for a playful feel */
+}
+
+.accordion-content p.instructor {
+    background-color: #e1ffe1; /* Light green background for instructor's messages */
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-content p.trainee {
+    background-color: #e1f0ff; /* Light blue background for trainee's messages */
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Scrollbar */
+.accordion-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.accordion-content::-webkit-scrollbar-thumb {
+    background-color: #4caf50;
+    border-radius: 10px;
+}
+
+.accordion-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Pagination */
+.pagination {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.pagination button {
+    background-color: #e58e26;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    margin: 0 5px;
+    cursor: pointer;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.pagination button:hover {
+    background-color: #f7d794;
+    color: #e58e26;
+}
+
+/* Mobile View Adjustments */
 @media (max-width: 768px) {
     .accordion-header {
         font-size: 1.2em; /* Adjust font size for smaller screens */
@@ -117,12 +183,10 @@
     }
 }
 
-.accordion-content {
-    padding: 20px;
-}
-
+/* Image Container */
 .image-container {
     display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line if necessary */
     justify-content: space-between;
     gap: 10px; /* Optional, adjusts the space between images */
 }
@@ -131,38 +195,39 @@
     width: 48%; /* Makes the images take up almost half the width of the container */
     height: auto;
     border-radius: 8px; /* Optional, for rounded corners */
+    max-width: 100%; /* Prevent overflow */
+    min-width: 0; /* Prevents flex items from growing too large */
 }
 
+/* Footer */
+footer {
+    text-align: center;
+    font-size: 1em;
+    color: #555;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border-top: 3px dashed #ccc;
+    margin-top: 50px;
+}
 
+/* Back Button */
+.back-button {
+    display: inline-block;
+    background-color: #e58e26;
+    color: #fff;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.1em;
+    padding: 15px 30px;
+    margin: 20px auto;
+    text-align: center;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-        footer {
-            text-align: center;
-            font-size: 1em;
-            color: #555;
-            padding: 20px;
-            background-color: #f3f3f3;
-            border-top: 3px dashed #ccc;
-            margin-top: 50px;
-        }
-
-        .back-button {
-            display: inline-block;
-            background-color: #e58e26;
-            color: #fff;
-            font-family: 'Patrick Hand', cursive;
-            font-size: 1.1em;
-            padding: 15px 30px;
-            margin: 20px auto;
-            text-align: center;
-            border-radius: 50px;
-            text-decoration: none;
-            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .back-button:hover {
-            background-color: #f7d794;
-            color: #e58e26;
-            transform: scale(1.1);
-        }
-
+.back-button:hover {
+    background-color: #f7d794;
+    color: #e58e26;
+    transform: scale(1.1);
+}
