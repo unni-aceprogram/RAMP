@@ -1,14 +1,14 @@
-     document.querySelectorAll('.accordion-header').forEach(item => {
-            item.addEventListener('click', () => {
-                const content = item.nextElementSibling;
-                // Toggle the content display properly on each click
-                if (content.style.display === 'block') {
-                    content.style.display = 'none'; // If it's open, close it
-                } else {
-                    content.style.display = 'block'; // Otherwise, open it
-                }
-            });
-        });
+document.querySelectorAll('.accordion-header').forEach(item => {
+    item.addEventListener('click', () => {
+        const content = item.nextElementSibling;
+        // Toggle the content display properly on each click
+        if (content.style.display === 'block') {
+            content.style.display = 'none'; // If it's open, close it
+        } else {
+            content.style.display = 'block'; // Otherwise, open it
+        }
+    });
+});
 
 // Variables
 let currentPage = 0;
@@ -34,23 +34,10 @@ function toggleAccordionContent(header) {
     }
 }
 
-// Accordion logic to handle section toggle and completion tracking
+// Accordion logic to handle section toggle (without time-based completion)
 accordionHeaders.forEach(header => {
     header.addEventListener('click', function () {
-        const content = this.nextElementSibling;
-
-        // Toggle the content display
         toggleAccordionContent(this);
-
-        // Disable "Next" until the section is completed
-        const nextButton = document.getElementById('nextPage');
-        nextButton.disabled = true;
-
-        // Mark completion after 5 seconds (for example, to show a green checkmark)
-        setTimeout(() => {
-            this.classList.add('completed');  // Add the green checkmark to the header
-            nextButton.disabled = false;     // Enable the "Next" button after completion
-        }, 5000);  // 5 seconds to complete the section
     });
 });
 
@@ -104,4 +91,3 @@ accordionHeaders.forEach(header => {
         }
     });
 });
-

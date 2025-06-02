@@ -20,20 +20,226 @@ window.addEventListener('load', () => {
 
   const quizData = [
     {
-      question: "What is the IATA code for Indira Gandhi International Airport in Delhi?",
-      options: ["DEL", "BOM", "BLR", "MAA"],
-      answer_index: 0,
-      explanation: "The IATA code for Indira Gandhi International Airport in Delhi is DEL. It is the busiest airport in India and among the top 20 busiest airports in the world."
-    },
-    {
-      question: "What is the IATA code for Jharsuguda Airport in Odisha?",
-      options: ["PYG", "JRG", "KJB", "DBR"],
-      answer_index: 1,
-      explanation: "The IATA code for Jharsuguda Airport is JRG. It is also known as Veer Surendra Sai Airport, named after a legendary freedom fighter from Odisha."
-    }
+    "question": "<div class=\"question\">What does FOD stand for on the airport ramp?</div>",
+    "options": ["Foreign Object Device", "Flight Operations Division", "Foreign Object Debris", "Field Operations Duty"],
+    "answer_index": 2,
+    "explanation": "FOD stands for Foreign Object Debris, referring to anything on the ramp that shouldn't be there—like tools, stones, or trash."
+  },
+  {
+    "question": "<div class=\"question\">When should a FOD check be conducted?</div>",
+    "options": ["Once a day during shift change", "Before arrival only", "Pre-arrival, pre-departure, and post-departure", "Every hour on the hour"],
+    "answer_index": 2,
+    "explanation": "FOD checks are done three times: pre-arrival, pre-departure, and post-departure to ensure ramp safety."
+  },
+  {
+    "question": "<div class=\"question\">What is the safe distance to maintain from the front of a jet engine when it's running?</div>",
+    "options": ["10 meters", "3 meters", "5.79 meters", "15 meters"],
+    "answer_index": 2,
+    "explanation": "5.79 meters is the minimum safe distance from the front of an operating jet engine to avoid jet ingest."
+  },
+  {
+    "question": "<div class=\"question\">What does jet blast refer to?</div>",
+    "options": ["Air sucked in from the front", "High-velocity air expelled from the rear of the engine", "Engine oil leak", "Loud engine noise"],
+    "answer_index": 1,
+    "explanation": "Jet blast is the high-speed air expelled from the rear of a jet engine, which can be dangerous."
+  },
+  {
+    "question": "<div class=\"question\">Before approaching an aircraft, what must be confirmed according to ramp safety procedure?</div>",
+    "options": ["Cabin lights are on", "Ground staff are nearby", "Engines off, ACB off, chocks in place, and engineer's thumbs up", "Fueling is completed"],
+    "answer_index": 2,
+    "explanation": "Approach is only safe after engines are off, ACB is off, chocks are placed, and the engineer signals all-clear."
+  },
+  {
+    "question": "<div class=\"question\">Where is the ACB located on an Airbus aircraft?</div>",
+    "options": ["On each wing", "Only under the tail", "Top and bottom of the fuselage", "Near the engine nacelle"],
+    "answer_index": 2,
+    "explanation": "On Airbus aircraft, ACB lights are located on the top and bottom of the fuselage."
+  },
+  {
+    "question": "<div class=\"question\">How many cones are used for an Airbus A320 under normal weather conditions?</div>",
+    "options": ["8", "11", "10", "6"],
+    "answer_index": 1,
+    "explanation": "11 cones are used to mark the safe zone around the A320 during normal weather conditions."
+  },
+  {
+    "question": "<div class=\"question\">How many chocks are used for an ATR in high wind conditions?</div>",
+    "options": ["12", "8", "6", "10"],
+    "answer_index": 2,
+    "explanation": "The ATR uses 6 chocks regardless of wind conditions."
+  },
+  {
+    "question": "<div class=\"question\">What should be done with FOD items found on the ramp?</div>",
+    "options": ["Hand over to the pilot", "Place in the FOD bin", "Throw in regular trash", "Leave near the aircraft tires"],
+    "answer_index": 1,
+    "explanation": "All FOD items must be placed in the designated FOD bin to avoid hazards."
+  },
+  {
+    "question": "<div class=\"question\">Which aircraft has six passenger doors: L1, L3, L4, R1, R3, R4?</div>",
+    "options": ["ATR", "A321", "A320", "B737"],
+    "answer_index": 1,
+    "explanation": "The Airbus A321 has six passenger doors, unlike the A320 or ATR."
+  },
+  {
+    "question": "<div class=\"question\">In windy conditions above 25 knots, what must be done with cones?</div>",
+    "options": ["Add more cones", "Attach cones to ropes", "Remove all cones", "Double their placement"],
+    "answer_index": 2,
+    "explanation": "All cones must be removed when wind speed exceeds 25 knots to avoid them becoming flying hazards."
+  },
+  {
+    "question": "<div class=\"question\">What is 'Hotel Mode' in an ATR aircraft?</div>",
+    "options": ["Crew rest mode", "Passenger entertainment mode", "Power from APU when engines are off", "External power via GPU"],
+    "answer_index": 2,
+    "explanation": "Hotel Mode refers to using the aircraft's APU to power systems while engines are off."
+  },
+  {
+    "question": "<div class=\"question\">Which doors are used in a 3-door operation for the Airbus A320?</div>",
+    "options": ["L1, L4, R1", "L1, L2, R1", "L1, L3, R3", "L2, L4, R2"],
+    "answer_index": 1,
+    "explanation": "The A320 uses L1, L2, and R1 for 3-door operations."
+  },
+  {
+    "question": "<div class=\"question\">What makes the ATR aircraft visually distinct compared to the A320 or A321?</div>",
+    "options": ["It has four engines", "It uses propellers and has a smaller passenger capacity", "It is double-decker", "It lacks landing gear"],
+    "answer_index": 1,
+    "explanation": "The ATR uses propellers, not jet engines, and has a smaller passenger capacity, making it visually distinct."
+  },
+{
+    "question": "What is the purpose of the Load Distribution Message (LDM) in aircraft operations?",
+    "options": [
+      "To display fuel consumption rates",
+      "To track in-flight turbulence",
+      "To balance passengers and cargo to maintain aircraft stability",
+      "To list emergency procedures"
+    ],
+    "answer_index": 2,
+    "explanation": "The LDM helps ensure proper balance of passengers, cargo, and baggage so the aircraft doesn't become unstable during flight."
+  },
+  {
+    "question": "What are the three main columns found in the Load Instruction Report (LIR)?",
+    "options": [
+      "Initial Load, Extra Load, Final Load",
+      "Cargo In, Cargo Out, Cargo Final",
+      "Arrival Load, Planned Loading, Final Loading",
+      "Passenger Count, Cargo Weight, Mail Load"
+    ],
+    "answer_index": 2,
+    "explanation": "The LIR contains three columns: Arrival Load, Planned Loading, and Final Loading to reflect what’s already onboard, planned to load, and finally loaded."
+  },
+  {
+    "question": "Where should Human Remains (HUM) be loaded on an Airbus aircraft?",
+    "options": [
+      "Compartment 3 with pets",
+      "Bulk hold (compartment 5), head facing the aircraft nose",
+      "Main cargo deck, tail-facing",
+      "Next to regular baggage in compartment 1"
+    ],
+    "answer_index": 1,
+    "explanation": "HUM must be loaded in the bulk hold (compartment 5), head facing the nose, to ensure respect and proper handling during flight."
+  },
+  {
+    "question": "At what wind speed should ramp operations start being shut down according to the wind chart?",
+    "options": [
+      "Above 60 knots",
+      "10-20 knots",
+      "30-40 knots",
+      "15-25 knots"
+    ],
+    "answer_index": 0,
+    "explanation": "At 60 knots and above, operations must be stopped due to extreme safety risks on the ramp."
+  },
+  {
+    "question": "What is the correct action if a ramp staff notices a crack in an aircraft engine?",
+    "options": [
+      "Ignore it if the flight is urgent",
+      "Report to the Aircraft Engineer and Safety Team immediately",
+      "Call the airline manager",
+      "Fix it using basic tools on site"
+    ],
+    "answer_index": 1,
+    "explanation": "Cracks must be reported immediately to the Aircraft Engineer and Safety Team to prevent accidents."
+  },
+  {
+    "question": "Which of the following is NOT a type of boarding pass mentioned in the training?",
+    "options": [
+      "DigiYatra Boarding Pass",
+      "Manual Boarding Pass",
+      "Smartwatch Boarding Pass",
+      "Web Check-in Boarding Pass"
+    ],
+    "answer_index": 2,
+    "explanation": "Smartwatch boarding pass is not mentioned in the transcript; only DigiYatra, Manual, Web Check-in, Kiosk, and Counter-issued passes are."
+  },
+  {
+    "question": "How should hazards be reported according to the SMS (Safety Management System) procedure?",
+    "options": [
+      "Directly call airport police",
+      "Use the SMS form or the 6E Breez platform",
+      "Send a message to the pilot",
+      "Leave a note at the ramp office"
+    ],
+    "answer_index": 1,
+    "explanation": "Hazards should be reported using the SMS form or the digital option on 6E Breez to ensure proper documentation and follow-up."
+  },
+  {
+    "question": "What does SSR on a boarding pass indicate?",
+    "options": [
+      "Flight status update",
+      "Special Service Request like wheelchair type needed",
+      "Seat number change",
+      "Security clearance level"
+    ],
+    "answer_index": 1,
+    "explanation": "SSR (Special Service Request) codes guide staff in providing specific assistance, such as the appropriate wheelchair type."
+  },
+  {
+    "question": "What is the correct response if a customer leaves dissatisfied at the airport?",
+    "options": [
+      "Email the CEO directly",
+      "Report it to PSHD with details like name, PNR, and recovery action taken",
+      "Do nothing unless asked",
+      "Offer a free upgrade"
+    ],
+    "answer_index": 1,
+    "explanation": "Such cases must be reported to PSHD with the customer’s name, PNR, issue summary, and what assistance was offered."
+  },
+  {
+    "question": "Which of these is a correct disability type that affects how people interact with the world?",
+    "options": [
+      "Tired Legs",
+      "Food Allergy",
+      "Autism Spectrum Disorder (ASD)",
+      "Motion Sickness"
+    ],
+    "answer_index": 2,
+    "explanation": "ASD is a recognized neurodevelopmental condition affecting communication and behavior, and is listed in the transcript."
+  },
+  {
+    "question": "What is a key safety measure when handling Human Remains (HUM) on the ramp?",
+    "options": [
+      "Strap it with two safety belts and place it upside-down",
+      "Always load it near the cockpit for supervision",
+      "Use two straps and ensure 'This Side Up' labels are followed correctly",
+      "Keep it next to live animals for companionship"
+    ],
+    "answer_index": 2,
+    "explanation": "HUM must be secured with two straps and loaded as labeled—always head forward and 'This Side Up' adhered to strictly."
+  }
   ];
 
-  // Sound toggle function
+  function getCurrentUser() {
+    return localStorage.getItem('user') || 'guest';
+  }
+
+  function getUserAttempts() {
+    const user = getCurrentUser();
+    return parseInt(localStorage.getItem(`attempts_${user}`) || "0", 10);
+  }
+
+  function setUserAttempts(count) {
+    const user = getCurrentUser();
+    localStorage.setItem(`attempts_${user}`, count.toString());
+  }
+
   window.toggleSound = function () {
     soundEnabled = !soundEnabled;
     correctSound.muted = !soundEnabled;
@@ -67,15 +273,15 @@ window.addEventListener('load', () => {
 
     progressBar.style.width = `${(index / quizData.length) * 100}%`;
 
-    startButton.style.display = "none"; // HIDE Home Page button on question pages
+    startButton.style.display = "none";
     startTimer();
   }
 
   function submitAnswer(index) {
-    if (answeredQuestions[index] === true) return; // Already answered
+    if (answeredQuestions[index] === true) return;
 
     const selected = document.querySelector('input[name="option"]:checked');
-    if (!selected) return; // No option selected
+    if (!selected) return;
 
     document.getElementById("submit-btn").disabled = true;
     clearInterval(timerInterval);
@@ -127,12 +333,11 @@ window.addEventListener('load', () => {
     card.appendChild(nextButton);
     explanationDiv.scrollIntoView({ behavior: "smooth", block: "start" });
 
-    // Update progress bar on answer submit
     progressBar.style.width = `${((currentIndex + 1) / quizData.length) * 100}%`;
   }
 
   function startTimer() {
-    let remainingTime = 30;
+    let remainingTime = 60;
     const timer = document.getElementById("timer");
     timer.textContent = `Time: ${remainingTime}s`;
     timer.className = "timer green";
@@ -144,7 +349,7 @@ window.addEventListener('load', () => {
 
       if (remainingTime <= 10) {
         timer.className = "timer red";
-        if (container.style.display === "block") alertElement.style.display = "block";
+        alertElement.style.display = "block";
       } else {
         alertElement.style.display = "none";
       }
@@ -152,27 +357,16 @@ window.addEventListener('load', () => {
       if (remainingTime <= 0) {
         clearInterval(timerInterval);
         alertElement.style.display = "none";
-        // Auto-submit with no answer if timer expires
-        if (!document.querySelector('input[name="option"]:checked')) {
-          // Mark as unanswered and show correct answer
-          answeredQuestions[currentIndex] = {
-            userAnswer: null,
-            correctAnswer: quizData[currentIndex].answer_index
-          };
-          disableOptionsAndShowCorrect();
-        }
-        submitAnswer(currentIndex);
+
+        // Instead of auto-submitting or moving to next, just notify the user
+        const timerDiv = document.getElementById("timer");
+        timerDiv.textContent = "Time's up!";
+        timerDiv.className = "timer red";
+
+        alert("Time's up! Please choose an option and click Submit to continue.");
+        // Let user still select and submit manually
       }
     }, 1000);
-  }
-
-  // Disable options and highlight correct answer - used when time expires without answer
-  function disableOptionsAndShowCorrect() {
-    const allOptions = document.querySelectorAll('input[name="option"]');
-    const correctIndex = quizData[currentIndex].answer_index;
-    allOptions.forEach(opt => opt.disabled = true);
-    const correctLabel = allOptions[correctIndex].closest("label");
-    correctLabel.classList.add("correct");
   }
 
   function showResult(correct) {
@@ -209,8 +403,16 @@ window.addEventListener('load', () => {
     };
   }
 
-  // Start quiz - reset and show first question
   window.startQuiz = function () {
+    const attempts = getUserAttempts();
+
+    if (attempts >= 4) {
+      alert("You have used all 4 attempts. The quiz is now locked and you cannot try again.");
+      return;
+    }
+
+    alert(`Attempt ${attempts + 1} of 4. You have ${4 - attempts} attempts remaining.`);
+
     score = 0;
     currentIndex = 0;
     answeredQuestions = new Array(quizData.length).fill(false);
@@ -218,16 +420,14 @@ window.addEventListener('load', () => {
     scoreContainer.innerHTML = "";
     container.style.display = "block";
     alertElement.style.display = "none";
-    startButton.style.display = "none"; // hide start/home button on quiz start
+    startButton.style.display = "none";
     questionCounter.textContent = `Q 1 / ${quizData.length}`;
     progressBar.style.width = "0%";
 
     renderQuestion(currentIndex);
     startTime = Date.now();
-    // startTimer is called inside renderQuestion already
   };
 
-  // End quiz - show results and history buttons
   function endQuiz() {
     clearInterval(timerInterval);
     alertElement.style.display = "none";
@@ -235,8 +435,33 @@ window.addEventListener('load', () => {
     const totalQuestions = quizData.length;
     const percentage = ((score / totalQuestions) * 100).toFixed(1);
 
+    const passed = percentage >= 90;
+
+    if (!passed) {
+      let attempts = getUserAttempts();
+      attempts++;
+      setUserAttempts(attempts);
+    }
+
+    const attempts = getUserAttempts();
+
+    let failMessage = "";
+    if (!passed) {
+      const failMessages = [
+    "Almost there! You didn’t pass this time, but reviewing your answers will help you improve.",
+    "Remember, every mistake is a learning opportunity—keep at it!",
+    "Your persistence is key! Each attempt builds your knowledge and skill.",
+    "This time was tough, but your dedication is what counts. Keep going!"
+  ];
+      failMessage = failMessages[Math.min(attempts - 1, failMessages.length - 1)];
+    }
+
     scoreContainer.innerHTML = `
       <div class="highlight-latest-result">🎉 You scored ${score} / ${totalQuestions} (${percentage}%)</div>
+      <div style="font-weight:bold; font-size:1.2em; margin: 10px auto 20px auto; color: ${passed ? 'green' : 'red'}; text-align: center; width: fit-content;">
+        ${passed ? "🎉 Congratulations, You Passed!" : failMessage}
+      </div>
+
       <div class="score-display">
         <p>Your Score: ${score} out of ${totalQuestions}</p>
         <p>Percentage: ${percentage}%</p>
@@ -252,178 +477,108 @@ window.addEventListener('load', () => {
 
     container.style.display = "none";
     progressBar.style.width = "100%";
+
     saveScore(score, totalQuestions);
     markQuizAsPassedIfEligible(score, totalQuestions);
 
-    // Show the startButton as Home Page button here
-  startButton.style.display = "block";
-  startButton.textContent = "Home Page";
-  startButton.style.margin = "20px auto";     // add this line
-  startButton.style.width = "fit-content";    // add this line (optional)
-  startButton.onclick = () => {
-    window.location.href = "index.html";
-  };
-}
-
-function showStartScreen() {
-  // Reset UI state
-  scoreContainer.innerHTML = "";
-  container.style.display = "none";
-  alertElement.style.display = "none";
-  progressBar.style.width = "0%";
-  questionCounter.textContent = "";
-
-  // Show start button centered with "Start Quiz"
-  startButton.style.display = "block";
-  startButton.style.margin = "20px auto";  // add this to center horizontally
-  startButton.style.textAlign = "center";
-  startButton.style.width = "fit-content";  // optional
-  startButton.textContent = "Start Quiz";
-  startButton.onclick = startQuiz;
-}
-
-
-  // Restart quiz — called when Restart Quiz clicked (inside container)
-  window.restartQuiz = function () {
-    showStartScreen();
-  };
-
-  function markQuizAsPassedIfEligible(score, totalQuestions) {
-    const percentage = (score / totalQuestions) * 100;
-    if (percentage >= 80) {
-      const user = localStorage.getItem('user');
-      const title = document.querySelector('h2')?.textContent?.toLowerCase() || '';
-      const quizMatch = title.match(/quiz\s*(\d+)/i);
-      if (user && quizMatch) {
-        const quizNum = quizMatch[1];
-        const key = `${user}_quiz${quizNum}_passed`;
-        localStorage.setItem(key, 'true');
-      }
-    }
-  }
-
-  function saveScore(score, totalQuestions) {
-    const totalTime = Math.floor((Date.now() - startTime) / 1000);
-    const percentage = Math.round((score / totalQuestions) * 100);
-    const history = JSON.parse(localStorage.getItem("quizHistory")) || [];
-
-    history.push({
-      title: document.querySelector("h2")?.textContent || "Quiz",
-      score,
-      totalQuestions,
-      percentage,
-      time: `${Math.floor(totalTime / 60)}m ${totalTime % 60}s`,
-      date: new Date().toLocaleString()
-    });
-
-    let attempts = parseInt(localStorage.getItem("quizAttempts") || "0", 10);
-    attempts++;
-    localStorage.setItem("quizAttempts", attempts.toString());
-    localStorage.setItem("quizHistory", JSON.stringify(history));
-  }
-
-  window.viewIncorrectAnswers = function () {
-    let incorrectHTML = `
-      <h3>Incorrect Answers</h3>
-      <table class="history-table">
-        <thead><tr><th>Question</th><th>Your Answer</th><th>Correct Answer</th></tr></thead>
-        <tbody>
-    `;
-
-    answeredQuestions.forEach((ans, i) => {
-      if (ans !== true && ans !== false && ans != null) {
-        incorrectHTML += `
-          <tr>
-            <td>${quizData[i].question}</td>
-            <td>${ans.userAnswer !== null && ans.userAnswer !== undefined ? quizData[i].options[ans.userAnswer] : 'No Answer'}</td>
-            <td>${quizData[i].options[ans.correctAnswer]}</td>
-          </tr>
-        `;
-      }
-    });
-
-    incorrectHTML += "</tbody></table>";
-    scoreContainer.innerHTML = incorrectHTML;
-    container.style.display = "none";
-
-    // SHOW Home Page button here
-    startButton.style.display = "inline-block";
+    startButton.style.display = "block";
     startButton.textContent = "Home Page";
+    startButton.style.margin = "20px auto";
+    startButton.style.width = "fit-content";
     startButton.onclick = () => {
       window.location.href = "index.html";
     };
+  }
+
+  window.restartQuiz = function () {
+    const attempts = getUserAttempts();
+    if (attempts >= 4) {
+      alert("You have used all 4 attempts. The quiz is now locked and you cannot try again.");
+      return;
+    }
+    startQuiz();
   };
 
+  function saveScore(score, totalQuestions) {
+    const user = getCurrentUser();
+    let history = JSON.parse(localStorage.getItem(`history_${user}`) || "[]");
+
+    history.push({
+      date: new Date().toISOString(),
+      score,
+      total: totalQuestions,
+      timeTaken: Math.floor((Date.now() - startTime) / 1000)
+    });
+
+    localStorage.setItem(`history_${user}`, JSON.stringify(history));
+  }
+
+  function markQuizAsPassedIfEligible(score, total) {
+    const user = getCurrentUser();
+    if ((score / total) >= 0.9) {
+      localStorage.setItem(`passed_${user}`, "true");
+    }
+  }
+
   window.viewHistory = function () {
-    const history = JSON.parse(localStorage.getItem("quizHistory")) || [];
-    if (history.length === 0) {
-      scoreContainer.innerHTML = "<p>No history available.</p>";
+    const user = getCurrentUser();
+    const history = JSON.parse(localStorage.getItem(`history_${user}`) || "[]");
+
+    if (!history.length) {
+      alert("No history available.");
       return;
     }
 
-    let historyHTML = `
-      <h3>Quiz History</h3>
-      <table class="history-table">
-        <thead><tr><th>Date</th><th>Score</th><th>Percentage</th><th>Time Taken</th></tr></thead>
-        <tbody>
-    `;
-
-    history.forEach((entry) => {
-      historyHTML += `
-        <tr>
-          <td>${entry.date}</td>
-          <td>${entry.score} / ${entry.totalQuestions}</td>
-          <td>${entry.percentage}%</td>
-          <td>${entry.time}</td>
-        </tr>
-      `;
+    let msg = "Your Quiz History:\n";
+    history.forEach((h, i) => {
+      msg += `${i + 1}. Date: ${new Date(h.date).toLocaleString()}, Score: ${h.score}/${h.total}, Time: ${h.timeTaken}s\n`;
     });
 
-    historyHTML += "</tbody></table>";
-    scoreContainer.innerHTML = historyHTML;
-    container.style.display = "none";
+    alert(msg);
+  };
 
-    // SHOW Home Page button here
-    startButton.style.display = "inline-block";
-    startButton.textContent = "Home Page";
-    startButton.onclick = () => {
-      window.location.href = "index.html";
-    };
+  window.viewIncorrectAnswers = function () {
+    let msg = "Incorrect Answers:\n";
+
+    answeredQuestions.forEach((ans, idx) => {
+      if (ans && ans !== true) {
+        const q = quizData[idx];
+        msg += `Q${idx + 1}: ${q.question}\nYour Answer: ${q.options[ans.userAnswer] || "No Answer"}\nCorrect Answer: ${q.options[ans.correctAnswer]}\n\n`;
+      }
+    });
+
+    if (msg === "Incorrect Answers:\n") msg = "No incorrect answers to show.";
+
+    alert(msg);
   };
 
   window.generatePDF = function () {
-    const history = JSON.parse(localStorage.getItem("quizHistory")) || [];
-    if (history.length === 0) {
-      alert("No quiz history to download.");
+    const user = getCurrentUser();
+    const history = JSON.parse(localStorage.getItem(`history_${user}`) || "[]");
+    if (!history.length) {
+      alert("No history available to download.");
       return;
     }
 
     const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text("Quiz History", 10, 20);
-    doc.setFontSize(12);
-    let y = 30;
+    doc.setFontSize(16);
+    doc.text("Quiz History", 10, 10);
 
-    history.forEach((entry, index) => {
-      doc.text(`${index + 1}. ${entry.title}`, 10, y);
-      y += 8;
-      doc.text(`   Score: ${entry.score} / ${entry.totalQuestions}`, 10, y);
-      y += 8;
-      doc.text(`   Percentage: ${entry.percentage}%`, 10, y);
-      y += 8;
-      doc.text(`   Time Taken: ${entry.time}`, 10, y);
-      y += 8;
-      doc.text(`   Date: ${entry.date}`, 10, y);
-      y += 12;
-      if (y > 270) {
-        doc.addPage();
-        y = 20;
-      }
+    let y = 20;
+    history.forEach((h, i) => {
+      const line = `${i + 1}. Date: ${new Date(h.date).toLocaleString()}, Score: ${h.score}/${h.total}, Time: ${h.timeTaken}s`;
+      doc.text(line, 10, y);
+      y += 10;
     });
 
-    doc.save("quiz_history.pdf");
+    doc.save("quiz-history.pdf");
   };
 
-  // Initialize with start screen
-  showStartScreen();
+  container.style.display = "none";
+  alertElement.style.display = "none";
+
+  startButton.onclick = startQuiz;
+
+  document.getElementById("sound-icon").textContent = "🔊";
+  document.getElementById("sound-text").textContent = "Sound ON";
 });
